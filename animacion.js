@@ -1,4 +1,4 @@
-// Matrix Rain (ya estaba en tu proyecto)
+// -------------------- MATRIX RAIN --------------------
 const canvas = document.getElementById('matrixCanvas');
 const ctx = canvas.getContext('2d');
 canvas.height = window.innerHeight;
@@ -35,8 +35,7 @@ document.addEventListener('mousemove', e => {
   offsetY = (e.clientY - window.innerHeight / 2) * 0.01;
 });
 
-// -------------------- LÓGICA DEL CÁLCULO + MONO MODE ------------------------
-
+// -------------------- LÓGICA DEL CÁLCULO --------------------
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -66,7 +65,6 @@ async function calcular() {
   monoFeoSound.pause(); monoFeoSound.currentTime = 0;
   monoFeo.classList.add("oculto");
 
-  // ------------------- SECUENCIA FALSA DE CÁLCULOS -------------------
   const pasos = [
     "Inicializando núcleo de lógica cuántica...",
     "Aplicando la Transformada Cuántica de Fourier...",
@@ -87,7 +85,6 @@ async function calcular() {
     await sleep(800);
   }
 
-  // ---------------------- VALIDACIÓN PARA MODO MONO --------------------
   if (parseInt(inputNumero) === 598 && colorPantaletas === "uruguay") {
     activarModoMono();
   } else if (parseInt(inputNumero) === 19) {
@@ -114,13 +111,10 @@ function reiniciar() {
   location.reload();
 }
 
-// ----------------------- MONO MODE + BANANAS + JUMPSCARE -----------------------
-
+// ----------------------- MODO MONO + JUMPSCARE -----------------------
 async function activarModoMono() {
   let monoCount = 0;
   const monoSound = document.getElementById("monoSound");
-  const monoFeoSound = document.getElementById("monoFeoSound");
-  const monoFeo = document.getElementById("monoFeo");
 
   crearMonoAnimado();
   const bananaInterval = setInterval(crearBanana, 300);
@@ -128,14 +122,14 @@ async function activarModoMono() {
   const soundInterval = setInterval(() => {
     monoSound.play();
     monoCount++;
-    if (monoCount >= 19) {
+    if (monoCount >= 5) {
       clearInterval(soundInterval);
       clearInterval(bananaInterval);
       setTimeout(() => {
         activarMonoFeo();
       }, 2000);
     }
-  }, 2000);
+  }, 1000);
 }
 
 function crearMonoAnimado() {
@@ -144,7 +138,7 @@ function crearMonoAnimado() {
   mono.className = "mono-animado";
   mono.style.position = "fixed";
   mono.style.width = "100px";
-  mono.style.zIndex = 130;
+  mono.style.zIndex = 9999;
   document.body.appendChild(mono);
 
   function animarMono() {
@@ -167,7 +161,7 @@ function crearBanana() {
   banana.style.top = "-50px";
   banana.style.left = Math.random() * window.innerWidth + "px";
   banana.style.width = "50px";
-  banana.style.zIndex = 120;
+  banana.style.zIndex = 9998;
   document.body.appendChild(banana);
 
   gsap.to(banana, {
@@ -181,8 +175,8 @@ function crearBanana() {
 
 function activarMonoFeo() {
   const monoFeo = document.getElementById("monoFeo");
-  monoFeo.classList.add("mostrar");
   const monoFeoSound = document.getElementById("monoFeoSound");
+  monoFeo.classList.add("mostrar");
   monoFeoSound.play();
 
   // Pantalla completa
@@ -192,7 +186,6 @@ function activarMonoFeo() {
     document.documentElement.webkitRequestFullscreen();
   }
 
-  // Vibración rápida
   const vibrar = gsap.to(monoFeo, {
     keyframes: [
       { x: "-5px", y: "-5px" },
@@ -205,7 +198,6 @@ function activarMonoFeo() {
     yoyo: true
   });
 
-  // Parar todo a los 3 segundos
   setTimeout(() => {
     vibrar.kill();
     monoFeo.classList.add("oculto");
