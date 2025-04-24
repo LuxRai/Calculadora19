@@ -4,36 +4,27 @@
   <meta charset="UTF-8">
   <title>Calculadora 19</title>
   <link rel="stylesheet" href="estilos.css">
+  <!-- Fuente Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
   <!-- Fondo Matrix -->
   <canvas id="matrixCanvas"></canvas>
-
-  <!-- Filtro oscuro -->
   <div class="filtro-negro"></div>
-
-  <!-- Líneas hacker -->
   <div class="background-lines"></div>
 
   <!-- Pantalla rota -->
   <img src="rota.png" id="pantallaRota" class="pantalla-rota" />
-
-  <!-- Audio normal glitch -->
   <audio id="glitchSound" src="roto.wav" preload="auto"></audio>
-
-  <!-- Audio celebración -->
   <audio id="bailaloRocky" src="Bailalo-Rocky.mp3" preload="auto"></audio>
-
-  <!-- Celebración arcoíris -->
   <div id="celebracion" class="celebracion oculto"></div>
-
-  <!-- Cuadro del resultado final -->
   <div id="resultadoFinal" class="resultado-cuadro oculto"></div>
 
-  <!-- Contenido principal -->
+  <!-- CONTENIDO PRINCIPAL -->
   <div class="contenido-principal">
-    <h1 class="brillo-texto">🟢 Calculadora 19 🟢</h1>
+    <!-- Logo al frente -->
+    <img src="logo.png" alt="Logo Calculadora 19" class="logo-img">
 
     <input id="inputNumero" type="number" placeholder="Escribe un número">
 
@@ -42,16 +33,17 @@
       <input id="colorPantaletas" type="text" placeholder="ej: Perlado amarillento">
     </div>
 
-    <button onclick="calcular()">
-      Calcular
-      <div class="mensaje-hover">🇨🇴 Viva Cartagena 🇨🇴</div>
-      <div class="mensaje-ticker">💃 Báilalo Rocky! 💃</div>
-    </button>
+    <button onclick="calcular()">Calcular</button>
+
+    <!-- Texto arcoíris debajo del botón -->
+    <div class="mensaje-hover-abajo arcoiris-text">
+      🇨🇴 Viva Cartagena 💃 Báilalo Rocky! 💃
+    </div>
 
     <div id="resultados" class="mt-6 w-full max-w-xl space-y-2 text-left text-sm"></div>
   </div>
 
-  <!-- Lógica del cálculo -->
+  <!-- JS del cálculo -->
   <script>
     const pasos = [
       "Inicializando núcleo de lógica cuántica...",
@@ -79,7 +71,6 @@
       const celebracion = document.getElementById("celebracion");
       const inputNumero = document.getElementById("inputNumero").value;
 
-      // Limpiar todo antes de calcular:
       resultados.innerHTML = "";
       pantallaRota.classList.remove("mostrar");
       resultadoFinal.classList.add("oculto");
@@ -98,7 +89,6 @@
         await sleep(800);
       }
 
-      // Efecto especial si es 19:
       if (parseInt(inputNumero) === 19) {
         bailaloRocky.play();
         celebracion.classList.remove("oculto");
@@ -107,7 +97,6 @@
         glitchSound.play();
       }
 
-      // Mostrar el resultado + botón para reiniciar:
       resultadoFinal.innerHTML = `
         💥 Resultado final: 19 💥
         <br><button class="recalcular" onclick="reiniciar()">🔄 Volver a Calcular</button>
@@ -128,7 +117,7 @@
     canvas.height = window.innerHeight;
     canvas.width = window.innerWidth;
 
-    const letters = '01☠️💻⚡∞Ω∑ΔΞΨΦπ≈←→↑↓';
+    const letters = ['19', '❶❾', '⓲', '⑲', '𝟏𝟗', '𝟷𝟿', '🄣', '🄸🄽🄴🄼🄰🄿🄸🄿', '➊➒'];
     const fontSize = 16;
     const columns = canvas.width / fontSize;
     const drops = Array.from({ length: columns }, () => 1);
@@ -141,7 +130,7 @@
       ctx.fillRect(0, 0, canvas.width, canvas.height);
 
       ctx.fillStyle = '#00ffcc';
-      ctx.font = fontSize + 'px Share Tech Mono';
+      ctx.font = fontSize + 'px Poppins';
 
       for (let i = 0; i < drops.length; i++) {
         const text = letters[Math.floor(Math.random() * letters.length)];

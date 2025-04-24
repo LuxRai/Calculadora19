@@ -1,11 +1,11 @@
-@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap');
 
 body {
   margin: 0;
   padding: 0;
   background-color: #0f0f0f;
   color: #00ffcc;
-  font-family: 'Share Tech Mono', monospace;
+  font-family: 'Poppins', sans-serif;
   overflow: hidden;
 }
 
@@ -24,7 +24,7 @@ canvas#matrixCanvas {
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.6); /* 60% opacidad */
+  background-color: rgba(0, 0, 0, 0.6);
   z-index: -2;
 }
 
@@ -50,30 +50,29 @@ canvas#matrixCanvas {
   to { background-position: 0 100px; }
 }
 
+/* Cuadro centrado */
 .contenido-principal {
   position: relative;
-  z-index: 5;
-  padding: 2rem;
+  z-index: 10;
+  max-width: 800px;
+  margin: auto;
+  padding: 100px;
+  border-radius: 25px;
+  border: 3px solid #00ffcc;
+  box-shadow: 0 0 20px #00ffcc;
   text-align: center;
+  background-color: #000000;
 }
 
-/* Título con efecto brillo */
-h1.brillo-texto {
-  font-size: 2.8rem;
+/* Logo visible y siempre al frente */
+.logo-img {
+  max-width: 200px;
   margin-bottom: 20px;
-  text-shadow:
-    0 0 10px #00ffcc,
-    0 0 20px #00ffcc,
-    0 0 40px #00ffcc,
-    0 0 80px #00ffcc;
-  animation: brillar 3s infinite alternate;
+  position: relative;
+  z-index: 11;
 }
 
-@keyframes brillar {
-  0% { text-shadow: 0 0 5px #00ffcc; }
-  100% { text-shadow: 0 0 20px #00ffcc, 0 0 40px #00ffcc; }
-}
-
+/* Inputs */
 input {
   padding: 10px;
   border: 2px solid #00ffcc;
@@ -82,6 +81,7 @@ input {
   color: #00ffcc;
   font-size: 1rem;
   margin-bottom: 10px;
+  width: 80%;
 }
 
 label {
@@ -91,6 +91,7 @@ label {
   color: #00ffcc;
 }
 
+/* Botón principal */
 button {
   background-color: #00ffcc;
   color: #000000;
@@ -99,8 +100,6 @@ button {
   border-radius: 5px;
   font-weight: bold;
   cursor: pointer;
-  position: relative;
-  overflow: hidden;
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
@@ -109,70 +108,24 @@ button:hover {
   box-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
 }
 
-button::before {
-  content: "";
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background-image: url('https://upload.wikimedia.org/wikipedia/commons/2/21/Flag_of_Colombia.svg');
-  background-size: cover;
-  background-position: center;
-  opacity: 0;
-  z-index: 1;
-  transition: opacity 0.5s;
-  animation: ondear 4s infinite ease-in-out;
-}
-
-button:hover::before {
-  opacity: 0.2;
-}
-
-button .mensaje-hover {
-  position: absolute;
-  top: 10px;
-  left: 50%;
-  transform: translateX(-50%);
-  white-space: nowrap;
-  z-index: 2;
-  opacity: 0;
-  color: #ffff00;
-  text-shadow: 0 0 5px #ffff00;
+/* Texto arcoíris debajo del botón */
+.mensaje-hover-abajo {
+  margin-top: 10px;
+  font-size: 0.7rem;
   font-weight: bold;
-  transition: opacity 0.3s;
+  background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: arcoiris 4s linear infinite;
 }
 
-button .mensaje-ticker {
-  position: absolute;
-  bottom: 5px;
-  white-space: nowrap;
-  z-index: 2;
-  color: #ff0099;
-  text-shadow: 0 0 4px #ff0099;
-  font-weight: bold;
-  left: 100%;
-  opacity: 0;
+@keyframes arcoiris {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-button:hover .mensaje-hover {
-  opacity: 1;
-}
-
-button:hover .mensaje-ticker {
-  animation: ticker 3s linear infinite;
-  opacity: 1;
-}
-
-@keyframes ticker {
-  from { left: 100%; }
-  to { left: -100%; }
-}
-
-@keyframes ondear {
-  0% { background-position-y: 0px; }
-  50% { background-position-y: 10px; }
-  100% { background-position-y: 0px; }
-}
-
+/* Pasos falsos */
 .resultado-step {
   opacity: 0;
   animation: aparecer 1s forwards;
@@ -183,13 +136,13 @@ button:hover .mensaje-ticker {
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* CUADRO DEL RESULTADO FINAL */
+/* Cuadro del resultado */
 .resultado-cuadro {
   position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background-color: #000000; /* SÓLIDO */
+  background-color: #000000;
   color: #00ffcc;
   border: 3px solid #00ffcc;
   border-radius: 15px;
@@ -198,19 +151,14 @@ button:hover .mensaje-ticker {
   font-size: 3rem;
   z-index: 150;
   box-shadow: 0 0 20px #00ffcc, 0 0 40px #00ffcc;
-  animation: aparecer 1s ease-out, parpadeo 2s infinite alternate;
+  animation: aparecer 1s ease-out;
 }
 
 .resultado-cuadro.oculto {
   display: none;
 }
 
-@keyframes parpadeo {
-  from { opacity: 1; }
-  to { opacity: 0.6; }
-}
-
-/* Botón de VOLVER A CALCULAR */
+/* Botón de Volver a Calcular */
 .recalcular {
   margin-top: 20px;
   padding: 10px 25px;
@@ -230,7 +178,7 @@ button:hover .mensaje-ticker {
   box-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
 }
 
-/* PANTALLA ROTA */
+/* Pantalla rota */
 .pantalla-rota {
   display: none;
   position: fixed;
@@ -257,7 +205,7 @@ button:hover .mensaje-ticker {
   100% { transform: rotate(0deg); }
 }
 
-/* 🎉 CELEBRACIÓN ARCOÍRIS 🎉 */
+/* 🎉 Celebración arcoíris 🎉 */
 .celebracion {
   position: fixed;
   top: 0;
@@ -267,7 +215,7 @@ button:hover .mensaje-ticker {
   background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet);
   background-size: 400% 400%;
   z-index: 120;
-  opacity: 0.9;
+  opacity: 0.8;
   animation: arcoiris 4s ease infinite;
 }
 
@@ -275,8 +223,23 @@ button:hover .mensaje-ticker {
   display: none;
 }
 
-@keyframes arcoiris {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+/* Responsive */
+@media (max-width: 768px) {
+  .contenido-principal {
+    padding: 80px 30px;
+    margin: 50px auto;
+  }
+
+  .logo-img {
+    max-width: 150px;
+  }
+
+  input {
+    width: 90%;
+  }
+
+  .resultado-cuadro {
+    font-size: 2rem;
+    padding: 20px;
+  }
 }
