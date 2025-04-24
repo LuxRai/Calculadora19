@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Calculadora 19</title>
+  <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+  <!-- Fondo Matrix -->
+  <canvas id="matrixCanvas"></canvas>
+
+  <!-- Filtro oscuro -->
+  <div class="filtro-negro"></div>
+
+  <!-- Líneas hacker -->
+  <div class="background-lines"></div>
+
+  <!-- Pantalla rota -->
+  <img src="rota.png" id="pantallaRota" class="pantalla-rota" />
+
+  <!-- Audio normal glitch -->
+  <audio id="glitchSound" src="roto.wav" preload="auto"></audio>
+
+  <!-- Audio celebración -->
+  <audio id="bailaloRocky" src="Bailalo-Rocky.mp3" preload="auto"></audio>
+
+  <!-- Celebración arcoíris -->
+  <div id="celebracion" class="celebracion oculto"></div>
+
+  <!-- Cuadro del resultado final -->
+  <div id="resultadoFinal" class="resultado-cuadro oculto"></div>
+
+  <!-- Contenido principal -->
+  <div class="contenido-principal">
+    <h1 class="brillo-texto">🟢 Calculadora 19 🟢</h1>
+
+    <input id="inputNumero" type="number" placeholder="Escribe un número">
+
+    <div class="sub-info">
+      <label for="colorPantaletas">Color de pantaletas:</label><br>
+      <input id="colorPantaletas" type="text" placeholder="ej: Perlado amarillento">
+    </div>
+
+    <button onclick="calcular()">
+      Calcular
+      <div class="mensaje-hover">🇨🇴 Viva Cartagena 🇨🇴</div>
+      <div class="mensaje-ticker">💃 Báilalo Rocky! 💃</div>
+    </button>
+
+    <div id="resultados" class="mt-6 w-full max-w-xl space-y-2 text-left text-sm"></div>
+  </div>
+
+  <!-- Lógica del cálculo -->
+  <script>
+    const pasos = [
+      "Inicializando núcleo de lógica cuántica...",
+      "Aplicando la Transformada Cuántica de Fourier...",
+      "Calculando el logaritmo hiperbólico inverso del módulo de torsión...",
+      "Normalizando los vectores en espacio de Hilbert...",
+      "Estabilizando entropía relacional...",
+      "Resolviendo la matriz de Schrödinger imaginaria...",
+      "Ejecutando backpropagation del hiperespacio...",
+      "Invirtiendo ecuación de onda en campo electromagnético...",
+      "Compilando coeficientes de la secuencia Fibonacci en π...",
+      "Verificando con álgebra de Lie..."
+    ];
+
+    function sleep(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    async function calcular() {
+      const resultados = document.getElementById("resultados");
+      const glitchSound = document.getElementById("glitchSound");
+      const bailaloRocky = document.getElementById("bailaloRocky");
+      const pantallaRota = document.getElementById("pantallaRota");
+      const resultadoFinal = document.getElementById("resultadoFinal");
+      const celebracion = document.getElementById("celebracion");
+      const inputNumero = document.getElementById("inputNumero").value;
+
+      // Limpiar todo antes de calcular:
+      resultados.innerHTML = "";
+      pantallaRota.classList.remove("mostrar");
+      resultadoFinal.classList.add("oculto");
+      resultadoFinal.innerHTML = "";
+      celebracion.classList.add("oculto");
+      bailaloRocky.pause();
+      bailaloRocky.currentTime = 0;
+      glitchSound.pause();
+      glitchSound.currentTime = 0;
+
+      for (let i = 0; i < pasos.length; i++) {
+        const paso = document.createElement("div");
+        paso.textContent = pasos[i];
+        paso.className = "resultado-step";
+        resultados.appendChild(paso);
+        await sleep(800);
+      }
+
+      // Efecto especial si es 19:
+      if (parseInt(inputNumero) === 19) {
+        bailaloRocky.play();
+        celebracion.classList.remove("oculto");
+      } else {
+        pantallaRota.classList.add("mostrar");
+        glitchSound.play();
+      }
+
+      // Mostrar el resultado + botón para reiniciar:
+      resultadoFinal.innerHTML = `
+        💥 Resultado final: 19 💥
+        <br><button class="recalcular" onclick="reiniciar()">🔄 Volver a Calcular</button>
+      `;
+      resultadoFinal.classList.remove("oculto");
+    }
+
+    function reiniciar() {
+      location.reload();
+    }
+  </script>
+
+  <!-- Matrix Rain + Parallax -->
+  <script>
+    const canvas = document.getElementById('matrixCanvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.height = window.innerHeight;
+    canvas.width = window.innerWidth;
+
+    const letters = '01☠️💻⚡∞Ω∑ΔΞΨΦπ≈←→↑↓';
+    const fontSize = 16;
+    const columns = canvas.width / fontSize;
+    const drops = Array.from({ length: columns }, () => 1);
+
+    let offsetX = 0;
+    let offsetY = 0;
+
+    function drawMatrixRain() {
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      ctx.fillStyle = '#00ffcc';
+      ctx.font = fontSize + 'px Share Tech Mono';
+
+      for (let i = 0; i < drops.length; i++) {
+        const text = letters[Math.floor(Math.random() * letters.length)];
+        const x = (i * fontSize) + offsetX;
+        const y = drops[i] * fontSize + offsetY;
+        ctx.fillText(text, x, y);
+
+        if (y > canvas.height && Math.random() > 0.975) {
+          drops[i] = 0;
+        }
+        drops[i]++;
+      }
+    }
+
+    setInterval(drawMatrixRain, 35);
+
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+
+    document.addEventListener('mousemove', e => {
+      offsetX = (e.clientX - window.innerWidth / 2) * 0.01;
+      offsetY = (e.clientY - window.innerHeight / 2) * 0.01;
+    });
+  </script>
+
+</body>
+</html>

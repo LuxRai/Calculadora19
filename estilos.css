@@ -1,0 +1,282 @@
+@import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #0f0f0f;
+  color: #00ffcc;
+  font-family: 'Share Tech Mono', monospace;
+  overflow: hidden;
+}
+
+canvas#matrixCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -3;
+  width: 100%;
+  height: 100%;
+}
+
+.filtro-negro {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6); /* 60% opacidad */
+  z-index: -2;
+}
+
+.background-lines {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: repeating-linear-gradient(
+    to bottom,
+    rgba(0, 255, 204, 0.1),
+    rgba(0, 255, 204, 0.1) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  z-index: -1;
+  animation: desplazamiento 10s linear infinite;
+}
+
+@keyframes desplazamiento {
+  from { background-position: 0 0; }
+  to { background-position: 0 100px; }
+}
+
+.contenido-principal {
+  position: relative;
+  z-index: 5;
+  padding: 2rem;
+  text-align: center;
+}
+
+/* Título con efecto brillo */
+h1.brillo-texto {
+  font-size: 2.8rem;
+  margin-bottom: 20px;
+  text-shadow:
+    0 0 10px #00ffcc,
+    0 0 20px #00ffcc,
+    0 0 40px #00ffcc,
+    0 0 80px #00ffcc;
+  animation: brillar 3s infinite alternate;
+}
+
+@keyframes brillar {
+  0% { text-shadow: 0 0 5px #00ffcc; }
+  100% { text-shadow: 0 0 20px #00ffcc, 0 0 40px #00ffcc; }
+}
+
+input {
+  padding: 10px;
+  border: 2px solid #00ffcc;
+  border-radius: 5px;
+  background-color: #1a1a1a;
+  color: #00ffcc;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+label {
+  margin-top: 15px;
+  margin-bottom: 5px;
+  font-size: 0.9rem;
+  color: #00ffcc;
+}
+
+button {
+  background-color: #00ffcc;
+  color: #000000;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  font-weight: bold;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
+}
+
+button::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-image: url('https://upload.wikimedia.org/wikipedia/commons/2/21/Flag_of_Colombia.svg');
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  z-index: 1;
+  transition: opacity 0.5s;
+  animation: ondear 4s infinite ease-in-out;
+}
+
+button:hover::before {
+  opacity: 0.2;
+}
+
+button .mensaje-hover {
+  position: absolute;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  z-index: 2;
+  opacity: 0;
+  color: #ffff00;
+  text-shadow: 0 0 5px #ffff00;
+  font-weight: bold;
+  transition: opacity 0.3s;
+}
+
+button .mensaje-ticker {
+  position: absolute;
+  bottom: 5px;
+  white-space: nowrap;
+  z-index: 2;
+  color: #ff0099;
+  text-shadow: 0 0 4px #ff0099;
+  font-weight: bold;
+  left: 100%;
+  opacity: 0;
+}
+
+button:hover .mensaje-hover {
+  opacity: 1;
+}
+
+button:hover .mensaje-ticker {
+  animation: ticker 3s linear infinite;
+  opacity: 1;
+}
+
+@keyframes ticker {
+  from { left: 100%; }
+  to { left: -100%; }
+}
+
+@keyframes ondear {
+  0% { background-position-y: 0px; }
+  50% { background-position-y: 10px; }
+  100% { background-position-y: 0px; }
+}
+
+.resultado-step {
+  opacity: 0;
+  animation: aparecer 1s forwards;
+}
+
+@keyframes aparecer {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* CUADRO DEL RESULTADO FINAL */
+.resultado-cuadro {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #000000; /* SÓLIDO */
+  color: #00ffcc;
+  border: 3px solid #00ffcc;
+  border-radius: 15px;
+  padding: 30px;
+  text-align: center;
+  font-size: 3rem;
+  z-index: 150;
+  box-shadow: 0 0 20px #00ffcc, 0 0 40px #00ffcc;
+  animation: aparecer 1s ease-out, parpadeo 2s infinite alternate;
+}
+
+.resultado-cuadro.oculto {
+  display: none;
+}
+
+@keyframes parpadeo {
+  from { opacity: 1; }
+  to { opacity: 0.6; }
+}
+
+/* Botón de VOLVER A CALCULAR */
+.recalcular {
+  margin-top: 20px;
+  padding: 10px 25px;
+  font-size: 1rem;
+  background-color: #00ffcc;
+  color: #000000;
+  border: 2px solid #00ffcc;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.recalcular:hover {
+  background-color: #000000;
+  color: #00ffcc;
+  border-color: #00ffcc;
+  box-shadow: 0 0 10px #00ffcc, 0 0 20px #00ffcc;
+}
+
+/* PANTALLA ROTA */
+.pantalla-rota {
+  display: none;
+  position: fixed;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  pointer-events: none;
+  opacity: 0.85;
+  animation: shake 0.4s ease-in-out;
+}
+
+.pantalla-rota.mostrar {
+  display: block;
+}
+
+@keyframes shake {
+  0% { transform: rotate(0deg); }
+  25% { transform: rotate(1deg); }
+  50% { transform: rotate(-1deg); }
+  75% { transform: rotate(1deg); }
+  100% { transform: rotate(0deg); }
+}
+
+/* 🎉 CELEBRACIÓN ARCOÍRIS 🎉 */
+.celebracion {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, red, orange, yellow, green, blue, indigo, violet);
+  background-size: 400% 400%;
+  z-index: 120;
+  opacity: 0.9;
+  animation: arcoiris 4s ease infinite;
+}
+
+.celebracion.oculto {
+  display: none;
+}
+
+@keyframes arcoiris {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
